@@ -1,11 +1,12 @@
 ---
-title: "R Notebook"
-output: html_notebook
-editor_options: 
-  chunk_output_type: inline
-author: 'Group: M358k-ers'
+title: "Project 1"
+author: 'Sunny Kharel, William Easterby, Gabby Toutin'
 date: '2020-09-18'
-  
+output:
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type: inline
 ---
 
 <!-- The author of this template is Dr. Gordan Zitkovic.-->
@@ -38,41 +39,38 @@ $Side$: The side that the gambler chooses
 
 $D_1, D_2, D_3$: Each $D_i$ represents the side of Die $i$ landed on
 
-$P(Win| Side) = P(D_1=Side \cap D_2=Side \cap D_3 = Side) + P(D_1=Side \cap D_2=Side \cap D_3 \neq Side)$
-$+ P(D_1=Side \cap D_2\neq Side \cap D_3 =Side)  P(D_1\neq Side \cap D_2=Side \cap D_3 = Side)$
+$$P(Win| Side) = P(D_1=Side \cap D_2=Side \cap D_3 = Side) + P(D_1=Side \cap D_2=Side \cap D_3 \neq Side)$$
+$$+ P(D_1=Side \cap D_2\neq Side \cap D_3 =Side)  P(D_1\neq Side \cap D_2=Side \cap D_3 = Side)$$
 
 Note: The outcomes of the die are independent, so we can change the intersections to multiplication
 
 
-$P(Win| Side) = P(D_1=Side)P( D_2=Side) P( D_3 = Side) + P(D_1=Side)P(D_2=Side) P( D_3 \neq Side)$
-$+ P(D_1=Side)P(D_2\neq Side)P( D_3 =Side) +  P(D_1\neq Side)P(D_2=Side )P( D_3 = Side)$
+$$P(Win| Side) = P(D_1=Side)P( D_2=Side) P( D_3 = Side) + P(D_1=Side)P(D_2=Side) P( D_3 \neq Side)$$
+$$+ P(D_1=Side)P(D_2\neq Side)P( D_3 =Side) +  P(D_1\neq Side)P(D_2=Side )P( D_3 = Side)$$
 
 Note: $P(D_i=Side) = 1/6$ for any $i$ and $P(D_i\neq Side)=5/6$ 
 
-$P(Win | Side) = (1/6)^3+(1/6)^2(5/6)+(1/6)^2(5/6)+(1/6)^2(5/6)$
+$$P(Win | Side) = (1/6)^3+(1/6)^2(5/6)+(1/6)^2(5/6)+(1/6)^2(5/6)$$
 
-$\textbf{P(Win)=P(Win | Side) = (1/6)^3 + 3(1/6)^2(5/6) = 0.07407407407}$
+$$\textbf{P(Win)=P(Win | Side) = (1/6)^3 + 3(1/6)^2(5/6) = 0.07407407407}$$
 
-```{r}
-792/11
-```
 
 #### **Problem 1.2** Who has the long-run advantage in the game: the house or the gambler? By how much on the dollar?
 Let us examine the probability of earning x dollars given we put in $1
 
-$P(X = -1) =   P(D_1 \neq Side)P(D_2 \neq Side)P(D_3 \neq Side) = (5/6)^3$
+$$P(X = -1) =   P(D_1 \neq Side)P(D_2 \neq Side)P(D_3 \neq Side) = (5/6)^3$$
 
-$P(X = 1) =   P(D_1 = Side)P(D_2 \neq Side)P(D_3 \neq Side)+ P(D_1 \neq Side)P(D_2 = Side)P(D_3 \neq Side)$
-$+P(D_1 \neq Side)P(D_2 \neq Side)P(D_3 = Side) = 3(1/6)(5/6)^2$
+$$P(X = 1) =   P(D_1 = Side)P(D_2 \neq Side)P(D_3 \neq Side)+ P(D_1 \neq Side)P(D_2 = Side)P(D_3 \neq Side)$$
+$$+P(D_1 \neq Side)P(D_2 \neq Side)P(D_3 = Side) = 3(1/6)(5/6)^2$$
 
-$P(X=2) =   P(D_1 = Side)P(D_2 = Side)P(D_3 \neq Side) + P(D_1 = Side)P(D_2 \neq Side)P(D_3 = Side)$
-$+ P(D_1 \neq Side)P(D_2 = Side)P(D_3 = Side) = 3(1/6)^2(5/6)$
+$$P(X=2) =   P(D_1 = Side)P(D_2 = Side)P(D_3 \neq Side) + P(D_1 = Side)P(D_2 \neq Side)P(D_3 = Side)$$
+$$+ P(D_1 \neq Side)P(D_2 = Side)P(D_3 = Side) = 3(1/6)^2(5/6)$$
 
-$P(X=3) =   P(D_1 = Side)P(D_2 = Side)P(D_3 = Side) = (1/6)^3$
+$$P(X=3) =   P(D_1 = Side)P(D_2 = Side)P(D_3 = Side) = (1/6)^3$$
 
 The expected value of dollars is:
 
-$E[X]=-1\$ \cdot (5/6)^3 + 1\$ \cdot 3(1/6)(5/6)^2 + 2\$\cdot 3(1/6)^2(5/6) + 3\$\cdot (1/6)^3 = -0.0787037037$
+$$E[X]=-1\$ \cdot (5/6)^3 + 1\$ \cdot 3(1/6)(5/6)^2 + 2\$\cdot 3(1/6)^2(5/6) + 3\$\cdot (1/6)^3 = -0.0787037037$$
 
 To see who has the long run advantage, we take the expected earnings of n successive games, in which we put in 
 a dollar. The expected earning of n successive games, E[earnings in n games], equals n*E[X]. E[X] is negative 
@@ -83,44 +81,42 @@ and n is positive, so we are always expected to be at a loss with more successiv
 
 For the game to be fair, E[X], as modeled in 1.2, should be equal to 0. Thus with some algebra:
 
-$E[X]=-1\$ \cdot (5/6)^3 + 1\$ \cdot 3(1/6)(5/6)^2 + a\cdot2\$\cdot 3(1/6)^2(5/6) + b\cdot3\$\cdot (1/6)^3 = 0$
+$$E[X]=-1\$ \cdot (5/6)^3 + 1\$ \cdot 3(1/6)(5/6)^2 + a\cdot2\$\cdot 3(1/6)^2(5/6) + b\cdot3\$\cdot (1/6)^3 = 0$$
 
 This reduces to 
 
-$30\cdot a + b = 50$
+$$30\cdot a + b = 50$$
 
-
-
+#### **Problem 1.4** Get three regular dice or use software to create simulated values of the outcomes of rounds of Chuck-a-Luck with the original reward system. Play 100 independent rounds of the game, starting with a new dollar each time. What is the average of the gambler’s winnings in these 100 rounds?
 
 
 ```{r}
-x=c(2,4)
-print(x^2)
+rounds = rbinom(100, 3, 1/6)
+print(paste0("The average is $", mean(rounds)), quote = FALSE)
 ```
 
-### Part b.
+#### **Problem 1.5** Take another look at your answers to problems 1.2 and 1.4. How do they relate to the Strong Law of Large Numbers?
+
+The answer to 1.4 shows that over time the expected winnings (or losings) trend towards the overall expected value in 1.2. Even in just 100 games, there is already a lose of `r (1-mean(rounds))*100` cents on the dollar, and over even more rounds we would expect it to converge to around 8 cents lose per dollar.
+
+
+#### **Problem 1.6**  Now we are going to look at a particular gambler who arrives at the casino with $2 in his pocket intending to play Chuck-a-Luck. At the beginning of every round of the game, he invests exactly $1 (if he has the money). He continues to play round after round of the game until he either loses everything, or his wealth reaches at least $4.
+
+
 ```{r}
+dollars=2
+round_count=0
+wealth=c(2)
+while ((dollars > 0) & (dollars < 4)){
+  dollars=dollars-1
+  round_count=round_count+1
+  dollars=dollars+rbinom(1,3,1/6)
+  wealth=append(wealth, dollars)
+}
+plot(wealth, type = "s")
 
 ```
 
-### Part e.
-```{r}
-
-```
-  
-### Part f.
-```{r}
-
-```
-  
-  
-### Part h.
-```{r}
-
-```
-
-
-## Problem 5.
 
 
 
