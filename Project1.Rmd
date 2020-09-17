@@ -51,14 +51,47 @@ Note: $P(D_i=Side) = 1/6$ for any $i$ and $P(D_i\neq Side)=5/6$
 
 $P(Win | Side) = (1/6)^3+(1/6)^2(5/6)+(1/6)^2(5/6)+(1/6)^2(5/6)$
 
-$\textbf{P(Win | Side) = (1/6)^3 + 3(1/6)^2(5/6) = 0.07407407407}$
+$\textbf{P(Win)=P(Win | Side) = (1/6)^3 + 3(1/6)^2(5/6) = 0.07407407407}$
 
 ```{r}
 792/11
 ```
 
-### Part a.
-You can write an explanation here, too. 
+#### **Problem 1.2** Who has the long-run advantage in the game: the house or the gambler? By how much on the dollar?
+Let us examine the probability of earning x dollars given we put in $1
+
+$P(X = -1) =   P(D_1 \neq Side)P(D_2 \neq Side)P(D_3 \neq Side) = (5/6)^3$
+
+$P(X = 1) =   P(D_1 = Side)P(D_2 \neq Side)P(D_3 \neq Side)+ P(D_1 \neq Side)P(D_2 = Side)P(D_3 \neq Side)$
+$+P(D_1 \neq Side)P(D_2 \neq Side)P(D_3 = Side) = 3(1/6)(5/6)^2$
+
+$P(X=2) =   P(D_1 = Side)P(D_2 = Side)P(D_3 \neq Side) + P(D_1 = Side)P(D_2 \neq Side)P(D_3 = Side)$
+$+ P(D_1 \neq Side)P(D_2 = Side)P(D_3 = Side) = 3(1/6)^2(5/6)$
+
+$P(X=3) =   P(D_1 = Side)P(D_2 = Side)P(D_3 = Side) = (1/6)^3$
+
+The expected value of dollars is:
+
+$E[X]=-1\$ \cdot (5/6)^3 + 1\$ \cdot 3(1/6)(5/6)^2 + 2\$\cdot 3(1/6)^2(5/6) + 3\$\cdot (1/6)^3 = -0.0787037037$
+
+To see who has the long run advantage, we take the expected earnings of n successive games, in which we put in 
+a dollar. The expected earning of n successive games, E[earnings in n games], equals n*E[X]. E[X] is negative 
+and n is positive, so we are always expected to be at a loss with more successive games, with **-8 cents/dollar**.
+
+#### **Problem 1.3** How would you change the amount of the winnings in every round of Chuck-a-Luck to make the game fair? Say that doubles pay $a per $1 bet rather than $2 and triples pay $b per $1 bet in stead of $3. What is the condition on a and b?
+
+
+For the game to be fair, E[X], as modeled in 1.2, should be equal to 0. Thus with some algebra:
+
+$E[X]=-1\$ \cdot (5/6)^3 + 1\$ \cdot 3(1/6)(5/6)^2 + a\cdot2\$\cdot 3(1/6)^2(5/6) + b\cdot3\$\cdot (1/6)^3 = 0$
+
+This reduces to 
+
+$10\cdot a + b = 50$
+
+
+
+
 
 ```{r}
 x=c(2,4)
