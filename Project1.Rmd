@@ -1,8 +1,9 @@
 ---
 title: "Project 1"
-author: 'Sunny Kharel, William Easterby, Gabrielle Toutin'
+author: "Sunny Kharel, William Easterby, Gabrielle Toutin"
 date: '2020-09-18'
 output:
+  pdf_document: default
   html_document:
     df_print: paged
 editor_options:
@@ -52,7 +53,7 @@ Note: $P(D_i=Side) = 1/6$ for any $i$ and $P(D_i\neq Side)=5/6$
 
 $$P(Win | Side) = (1/6)^3+(1/6)^2(5/6)+(1/6)^2(5/6)+(1/6)^2(5/6)$$
 
-$$\textbf{P(Win)=P(Win | Side) = (1/6)^3 + 3(1/6)^2(5/6) = 0.07407407407}$$
+$$P(Win)=P(Win | Side) = (1/6)^3 + 3(1/6)^2(5/6) = 0.07407407407$$
 
 
 #### **Problem 1.2** Who has the long-run advantage in the game: the house or the gambler? By how much on the dollar?
