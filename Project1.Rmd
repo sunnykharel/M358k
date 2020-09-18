@@ -1,4 +1,45 @@
-ap D_2=Side \cap D_3 = Side) + P(D_1=Side \cap D_2=Side \cap D_3 \neq Side)$$
+---
+title: "Project 1"
+author: 'Sunny Kharel, William Easterby, Gabrielle Toutin'
+date: '2020-09-18'
+output:
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type: inline
+---
+
+<!-- The author of this template is Dr. Gordan Zitkovic.-->
+<!-- The code chunk below contains some settings that will  -->
+<!-- make your R code look better in the output pdf file.  -->
+<!-- If you are curious about what each option below does, -->
+<!-- go to https://yihui.org/knitr/options/ -->
+<!-- If not, feel free to disregard everything ...  -->
+```{r echo=FALSE, warning=FALSE, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  fig.align="center",
+  fig.pos="t",
+  strip.white = TRUE
+)
+```
+<!-- ... down to here. -->
+
+## Problem 1
+
+#### **Problem 1.1.** What is the probability that the gambler wins the game?
+
+The probability of winning is equal to the $P(Win|Side)$, because the gambler has to choose a side.
+Probability of winning for any chosen side is equal because we assume we have a fair die.
+Thus, we equate $P(Win|Side)$ as the probability that the gambler wins the game
+
+Now, let us define the variables
+
+$Side$: The side that the gambler chooses
+
+$D_1, D_2, D_3$: Each $D_i$ represents the side of Die $i$ landed on
+
+$$P(Win| Side) = P(D_1=Side \cap D_2=Side \cap D_3 = Side) + P(D_1=Side \cap D_2=Side \cap D_3 \neq Side)$$
 $$+ P(D_1=Side \cap D_2\neq Side \cap D_3 =Side) + P(D_1\neq Side \cap D_2=Side \cap D_3 = Side)$$
 
 Note: The outcomes of the die are independent, so we can change the intersections to multiplication
