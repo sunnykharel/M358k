@@ -143,9 +143,39 @@ scientific discovery can suppress the impact of flukes in the research world.
 
 
 ## Part 2: A simple experiment
-Design and execute a simple experiment consisting of trials such as coin tosses, or rolls of a die. See
-    how close to “fairness” your results are. Are you tempted to increase the number of trials? Plot
-    your findings and comment on the presented data.
+!["A seven!"]("Seven day.jpg"){Width=10%}  
+Every day since the middle of August this year, David Lynch (legendary director of Twin Peaks, Eraserhead, and many more) has been drawing balls labeled 1-10 from a jar that he built. Every video, he shows the numbered balls in the jar, swirls the numbers with his hand while not looking at them, and chooses a number. This number is deemed "Today's Number".  
+After a while, people noticed that all the numbers had been chosen except for 7. Commenters on YouTube have questioned how fair his drawings are. Some hypothesized that he was placing the 7 in the fridge to deliberately avoid it.   
+!["Man, if tomorrow's not a 7 I'm gonna lose it"]("Wes.jpg"){width=50%}  
+One day, he drew a 7. There hasn't been a 7 since. Is he being fair in choosing his numbers?
+
+###Analysis
+```{r}
+numbers = read.csv("David Lynch Numbers.csv")
+hist(numbers$Outcome, breaks=0:10, xlab="Ball number", main="Histogram of ball numbers")
+```
+
+The data is expected to follow a uniform distribution because each ball has a 1/10 chance of being chosen. Given that there are `r length(numbers$Outcome)` days of outcomes, each number is expected to show up `r length(numbers$Outcome)/10` times.
+
+###Distribution of frequencies
+```{r}
+frequencies = c()
+for (i in 1:10)
+{
+  frequencies = c(frequencies,sum(numbers$Outcome==i))
+}
+hist(frequencies, breaks=0:12, xlab="# of times certain number appeared",ylab="How many numbers",main="Histogram of # of times a certain number appears")
+```
+
+Because the numbers are randomly chosen, you would expect the numbers to have frequencies normally distributed about 6.1. This is about what happens. This graph is very choppy, but there are 2 modes: 7 and 5. These are very close to 6.1.
+```{r}
+summary(frequencies)
+```
+
+Additionally, the mean frequency happens to be exactly 6.1! The median is 6, which is very close to this. The standard deviation is `r sd(frequencies)` but the IQR is `r 7.75-4.25`, indicating that the data is heavy towards the ends of the graph, as about half of the data could fit in 1 standard deviation.  
+
+###Conclusion
+I believe that David Lynch is being honest and drawing balls fairly. Both the mean and the median are close to the expected value. Although the data is spread out, I believe that this can be accepted due to the fact that there have only been 61 draws so far. As time goes on, I would expect that the frequency data would become more normally distributed, and that there will be more sevens!
 
 
 ## Part 3: Further reading
