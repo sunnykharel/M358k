@@ -1,0 +1,113 @@
+---
+title: "Project # 3: Power of a z-test. Two proportions. Chi-squared."
+author: "Sunny Kharel, William Easterby, Gabrielle Toutin"
+date: "11/23/2020"
+output: pdf_document
+urlcolor: blue 
+---
+
+---
+
+## Problem 3.1: The operating characteristic curve: Power of a z-test.
+
+
+### (i)
+$H_0:\mu=286$ vs. $H_a:\mu<286$  
+Rejection region:  
+$\mu \pm z^*\frac{\sigma}{\sqrt{n}}$  
+```{r}
+alpha = 0.05
+n = 100
+sigma = 155
+nullmu = 286
+
+domain = (nullmu-2*(sigma)):(nullmu+2*(sigma))  # plot 2 standard deviations
+range = dnorm(domain,nullmu,sigma)
+plot(domain,range,"l",col=get_pal("Kakapo")[6],xlab = "Calories",ylab = "Probability")
+lines(nullmu,dnorm(nullmu,nullmu,sigma),type="h",col=get_pal("Kakapo")[1])
+
+rr_upper = nullmu + qnorm(1-alpha)*sigma/sqrt(n)
+lines(rr_upper,dnorm(rr_upper,nullmu,sigma),type="h",col=get_pal("Kakapo")[3])
+
+x = (nullmu-2*(sigma)):rr_upper
+y = dnorm(x,nullmu,sigma)
+polygon(c(x,rev(x)),c(y,vector(mode="integer",length=length(x))),col=get_pal("Kakapo")[2])
+
+#redo things that got deleted
+lines(rr_upper,dnorm(rr_upper,nullmu,sigma),type="h",col=get_pal("Kakapo")[3])
+lines(nullmu,dnorm(nullmu,nullmu,sigma),type="h",col=get_pal("Kakapo")[1])
+
+```
+
+### (ii)
+```{r}
+ivegotthepower <- function(mua){
+  power = pnorm(rr_upper,mua,sigma)
+  return(power)
+}
+
+plot(x,ivegotthepower(x),"l",xlab="Alternative mean (calories)",ylab = "Power of the test")
+```
+
+
+
+## Part 2: A simple experiment
+!["A seven!"]("Seven day.jpg"){Width=10%}  
+Every day since the middle of August this year, David Lynch (legendary director of Twin Peaks, Eraserhead, and many more) has been drawing balls labeled 1-10 from a jar that he built. Every video, he shows the numbered balls in the jar, swirls the numbers with his hand while not looking at them, and chooses a number. This number is deemed "Today's Number".  
+After a while, people noticed that all the numbers had been chosen except for 7. Commenters on YouTube have questioned how fair his drawings are. Some hypothesized that he was placing the 7 in the fridge to deliberately avoid it.   
+!["Man, if tomorrow's not a 7 I'm gonna lose it"]("Wes.jpg"){width=50%}  
+One day, he drew a 7. There hasn't been a 7 since. Is he being fair in choosing his numbers?
+
+###Analysis
+```{r}
+numbers = read.csv("David Lynch Numbers.csv")
+hist(numbers$Outcome, breaks=0:10, xlab="Ball number", main="Histogram of ball numbers")
+```
+
+The data is expected to follow a uniform distribution because each ball has a 1/10 chance of being chosen. Given that there are `r length(numbers$Outcome)` days of outcomes, each number is expected to show up `r length(numbers$Outcome)/10` times.
+
+###Distribution of frequencies
+```{r}
+frequencies = c()
+for (i in 1:10)
+{
+  frequencies = c(frequencies,sum(numbers$Outcome==i))
+}
+hist(frequencies, breaks=0:12, xlab="# of times certain number appeared",ylab="How many numbers",main="Histogram of # of times a certain number appears")
+```
+
+Because the numbers are randomly chosen, you would expect the numbers to have frequencies normally distributed about 6.1. This is about what happens. This graph is very choppy, but there are 2 modes: 7 and 5. These are very close to 6.1.
+```{r}
+summary(frequencies)
+```
+
+Additionally, the mean frequency happens to be exactly 6.1! The median is 6, which is very close to this. The standard deviation is `r sd(frequencies)` but the IQR is `r 7.75-4.25`, indicating that the data is heavy towards the ends of the graph, as about half of the data could fit in 1 standard deviation.  
+
+###Conclusion
+I believe that David Lynch is being honest and drawing balls fairly. Both the mean and the median are close to the expected value. Although the data is spread out, I believe that this can be accepted due to the fact that there have only been 61 draws so far. As time goes on, I would expect that the frequency data would become more normally distributed, and that there will be more sevens!
+
+
+## Part 3: Further reading
+
+## Problem 3.1: Find **one** available study which was discussed in the podcast. Comment on the original and the replicated study.
+
+
+One study mentioned in the podcast was one about the effects of sugary drinks on a person's decision making. For both used the same experimental procedure, which include double-blind experimenting, and both used the same analysis procedures. Both experiments seemed to be conducted very well, with it seeming like they took care to not introduce any biases into the experiment. However, the replicated study did not reproduce the results of the original study. This goes a long with what the podcast talks about, making it appear as if the original study results may have just been statistical flukes. This idea aligns somewhat with what we have been learning about in class with confidence intervals, where even with a high interval there will be experiments where the true mean is not within the interval.
+
+
+## Problem 3.2: Look into the following [article](http://www.statnews.com/2015/12/18/clinical-trial-reporting/). What is the take-home message?
+
+
+The results of many clinical trials have gone unreported, violating a federal law which mandates it. This is bad, as it can cause the effects of drugs to be exaggerated and can hide some of the negative effects of them. Even more than just reporting the results, it is also important to publish them in a reader-friendly way and also to provide information on how the analysis was conducted, and perhaps to even publish the data for others to be able to analyze. This is something that is important not only to clinical trials, but to science as a whole.
+
+
+## Problem 3.3: Look into the following [article](http://www.statnews.com/pharmalot/2015/12/16/pharmalot-nih-drug-trials/). What is the take-home message?
+
+
+The number of industry-sponsored drug trails have increased in recent years, which is not great for the public because it can make it hard to decide which treatment is best. The issue is not that these industry-sponsored trials are bad, but instead that they may not tell the full story of the drug's effects as they tend to only report the drug's affects over a placebo and not against other available drugs. This can make it hard for physicians to decide which it best.
+
+
+## Problem 3.4: Find out more about Andrew Wakefield. Then go to this [CDC website](https://www.cdc.gov/vaccinesafety/concerns/autism.html). What are your comments? 
+
+
+Andrew Wakefield is known for publishing a study which showed a link between the MMR vaccine and autism which no one was ever able to reproduce the results of the study. It appears that he not only failed to disclose financial interests but also may have selectively chosen results that helped his conclusion. As the CDC reports, as well as many others, there is no actual link between vaccines and autism. This can help to show that even published results of a single experiment are not always reliable as if the experiment is not conducted properly and transparently, and if it cannot be reproduced, it can lead people to draw incorrect conclusions.
